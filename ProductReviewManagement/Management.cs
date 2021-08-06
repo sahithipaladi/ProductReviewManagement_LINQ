@@ -20,7 +20,7 @@ namespace ProductReviewManagement
             productReviews.Add(new ProductReview() { ProductID = 2, UserID = 4, Rating = 5, Review = "Excellent", IsLike = true });
             productReviews.Add(new ProductReview() { ProductID = 4, UserID = 4, Rating = 3, Review = "Good", IsLike = true });
             productReviews.Add(new ProductReview() { ProductID = 5, UserID = 6, Rating = 2, Review = "Average", IsLike = false });
-            productReviews.Add(new ProductReview() { ProductID = 14, UserID = 3, Rating = 4, Review = "VeryGood", IsLike = true });
+            productReviews.Add(new ProductReview() { ProductID = 9, UserID = 3, Rating = 4, Review = "VeryGood", IsLike = true });
             productReviews.Add(new ProductReview() { ProductID = 12, UserID = 5, Rating = 5, Review = "Excellent", IsLike = true });
             productReviews.Add(new ProductReview() { ProductID = 4, UserID = 4, Rating = 5, Review = "Excellent", IsLike = true });
             productReviews.Add(new ProductReview() { ProductID = 3, UserID = 6, Rating = 4, Review = "VeryGood", IsLike = true });
@@ -65,6 +65,19 @@ namespace ProductReviewManagement
         {
             Console.WriteLine("---------Retrieve Top 3 records based on Rating---------");
             var result = (from product in productReviews orderby product.Rating descending select product).Take(3).ToList();
+            IterateList(result);
+        }
+
+        /// <summary>
+        /// UC 3 - Retrieve All Records Using Rating and ProductId
+        /// </summary>
+        /// <param name="productReviews"></param>
+        public static void RetriveAllUsingRatingAndProductId(List<ProductReview> productReviews)
+        {
+            var result = (from product in productReviews
+                          where (product.ProductID == 1 || product.ProductID == 4 || product.ProductID == 9)
+                          && product.Rating > 3
+                          select product).ToList();
             IterateList(result);
         }
     }
