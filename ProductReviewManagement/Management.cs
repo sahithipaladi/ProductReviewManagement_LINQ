@@ -94,5 +94,19 @@ namespace ProductReviewManagement
                 Console.WriteLine(list.ProductID + "\t\t" + list.Count);
             }
         }
+
+        /// <summary>
+        /// UC 5 - Retrieve ProductId and Review
+        /// </summary>
+        /// <param name="productReviews"></param>
+        public static void RetrieveProductIdAndReview(List<ProductReview> productReviews)
+        {
+            var result = from product in productReviews select new { product.ProductID, product.Review };
+            Console.WriteLine("ProductId\tReview");
+            foreach (var list in result)
+            {
+                Console.WriteLine(list.ProductID + "\t\t" + list.Review);
+            }
+        }
     }
 }
