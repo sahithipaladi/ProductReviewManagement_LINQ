@@ -80,5 +80,19 @@ namespace ProductReviewManagement
                           select product).ToList();
             IterateList(result);
         }
+
+        /// <summary>
+        /// UC 4 - Retrieve Count of Product Review for each ProductId
+        /// </summary>
+        /// <param name="productReviews"></param>
+        public static void CountOfRecords(List<ProductReview> productReviews)
+        {
+            var result = productReviews.GroupBy(x => x.ProductID).Select(x => new { ProductID = x.Key, Count = x.Count() });
+            Console.WriteLine("ProductID\tCount");
+            foreach (var list in result)
+            {
+                Console.WriteLine(list.ProductID + "\t\t" + list.Count);
+            }
+        }
     }
 }
