@@ -56,5 +56,16 @@ namespace ProductReviewManagement
                 Console.WriteLine();
             }
         }
+
+        /// <summary>
+        /// UC 2 - Retrieve Top 3 Records from the list based on Rating
+        /// </summary>
+        /// <param name="productReviews"></param>
+        public static void RetrieveTopThree(List<ProductReview> productReviews)
+        {
+            Console.WriteLine("---------Retrieve Top 3 records based on Rating---------");
+            var result = (from product in productReviews orderby product.Rating descending select product).Take(3).ToList();
+            IterateList(result);
+        }
     }
 }

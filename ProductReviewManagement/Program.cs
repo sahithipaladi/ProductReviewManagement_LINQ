@@ -10,8 +10,10 @@ namespace ProductReviewManagement
         {
             Console.WriteLine("----------------Product Review Management--------------");
             List<ProductReview> productReviewList = new List<ProductReview>();
+            //Add into list
             Management.AddProductReviews(productReviewList);
-            Management.IterateList(productReviewList);
+            //Retrieve top 3 from list
+            Management.RetrieveTopThree(productReviewList);
         }
     }
 }
