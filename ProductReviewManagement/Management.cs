@@ -137,6 +137,7 @@ namespace ProductReviewManagement
         /// <summary>
         /// UC 8 - Create Data Table
         /// UC 9 - Retrieve all records whose isLike value is true
+        /// UC 10 - Average Rating of each ProductId
         /// </summary>
         /// <param name="productReviews"></param>
         public static void CreateDataTable(List<ProductReview> productReviews)
@@ -145,10 +146,10 @@ namespace ProductReviewManagement
             //Creating DataTable
             DataTable dataTable = new DataTable();
             //Adding Columns
-            dataTable.Columns.Add("ProductId");
-            dataTable.Columns.Add("UserId");
-            dataTable.Columns.Add("Rating");
-            dataTable.Columns.Add("Review");
+            dataTable.Columns.Add("ProductId", typeof(int));
+            dataTable.Columns.Add("UserId", typeof(int));
+            dataTable.Columns.Add("Rating", typeof(double));
+            dataTable.Columns.Add("Review", typeof(string));
             dataTable.Columns.Add("IsLike", typeof(bool));
             //Adding rows from the list
             foreach (var list in productReviews)
@@ -160,6 +161,7 @@ namespace ProductReviewManagement
             var result = from product in dataTable.AsEnumerable()
                          where product.Field<bool>("IsLike").Equals(true)
                          select product;
+            Console.WriteLine("Retrieve records for isLike value is true");
             //Retrieve records whose isLike value is true
             foreach (var data in result)
             {
@@ -170,8 +172,16 @@ namespace ProductReviewManagement
                 Console.Write($"IsLike-{data.ItemArray[4]}\t");
                 Console.WriteLine();
             }
+
+            //UC10
+            var average = dataTable.AsEnumerable()
+                           .GroupBy(x => x.Field<int>("ProductID"))
+                           .Select(x => new { ProductID = x.Key, Average = x.Average(p => p.Field<double>("Rating")) });
+            Console.WriteLine("Average Rating by ProductID");
+            foreach (var data in average)
+            {
+                Console.WriteLine(data.ProductID + "\t" + data.Average);
+            }
         }
-
-
     }
 }
