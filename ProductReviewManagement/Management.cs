@@ -136,10 +136,12 @@ namespace ProductReviewManagement
 
         /// <summary>
         /// UC 8 - Create Data Table
+        /// UC 9 - Retrieve all records whose isLike value is true
         /// </summary>
         /// <param name="productReviews"></param>
         public static void CreateDataTable(List<ProductReview> productReviews)
         {
+            //UC8
             //Creating DataTable
             DataTable dataTable = new DataTable();
             //Adding Columns
@@ -147,12 +149,29 @@ namespace ProductReviewManagement
             dataTable.Columns.Add("UserId");
             dataTable.Columns.Add("Rating");
             dataTable.Columns.Add("Review");
-            dataTable.Columns.Add("IsLike");
+            dataTable.Columns.Add("IsLike", typeof(bool));
             //Adding rows from the list
             foreach (var list in productReviews)
             {
                 dataTable.Rows.Add(list.ProductID, list.UserID, list.Rating, list.Review, list.IsLike);
             }
+
+            //UC9
+            var result = from product in dataTable.AsEnumerable()
+                         where product.Field<bool>("IsLike").Equals(true)
+                         select product;
+            //Retrieve records whose isLike value is true
+            foreach (var data in result)
+            {
+                Console.Write($"ProductId-{data.ItemArray[0]}\t");
+                Console.Write($"UserId-{data.ItemArray[1]}\t");
+                Console.Write($"Rating-{data.ItemArray[2]}\t");
+                Console.Write($"Review-{data.ItemArray[3]}\t");
+                Console.Write($"IsLike-{data.ItemArray[4]}\t");
+                Console.WriteLine();
+            }
         }
+
+
     }
 }
