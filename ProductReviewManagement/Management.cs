@@ -108,5 +108,15 @@ namespace ProductReviewManagement
                 Console.WriteLine(list.ProductID + "\t\t" + list.Review);
             }
         }
+
+        /// <summary>
+        /// UC 6 - Skip Top 5 Records
+        /// </summary>
+        /// <param name="productReviews"></param>
+        public static void SkipTopFive(List<ProductReview> productReviews)
+        {
+            var result = (from product in productReviews select product).Skip(5).ToList();
+            IterateList(result);
+        }
     }
 }

@@ -12,8 +12,8 @@ namespace ProductReviewManagement
             List<ProductReview> productReviewList = new List<ProductReview>();
             //Add into list
             Management.AddProductReviews(productReviewList);
-            //Retrieve all records using rating productid
-            Management.RetriveAllUsingRatingAndProductId(productReviewList);
+            //Skip top 5 records and retrieve reamining
+            Management.SkipTopFive(productReviewList);
         }
     }
 }
