@@ -118,5 +118,19 @@ namespace ProductReviewManagement
             var result = (from product in productReviews select product).Skip(5).ToList();
             IterateList(result);
         }
+
+        /// <summary>
+        /// UC 7 - Retrieve ProductId and Review using Select operator
+        /// </summary>
+        /// <param name="productReviews"></param>
+        public static void SelectProductIdAndReview(List<ProductReview> productReviews)
+        {
+            var result = productReviews.Select(x => new { x.ProductID, x.Review });
+            Console.WriteLine("ProductId\tReview");
+            foreach (var list in result)
+            {
+                Console.WriteLine(list.ProductID + "\t\t" + list.Review);
+            }
+        }
     }
 }
