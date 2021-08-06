@@ -138,6 +138,7 @@ namespace ProductReviewManagement
         /// UC 8 - Create Data Table
         /// UC 9 - Retrieve all records whose isLike value is true
         /// UC 10 - Average Rating of each ProductId
+        /// UC 11 - Nice Reviews
         /// </summary>
         /// <param name="productReviews"></param>
         public static void CreateDataTable(List<ProductReview> productReviews)
@@ -161,7 +162,7 @@ namespace ProductReviewManagement
             var result = from product in dataTable.AsEnumerable()
                          where product.Field<bool>("IsLike").Equals(true)
                          select product;
-            Console.WriteLine("Retrieve records for isLike value is true");
+            Console.WriteLine("\nRetrieve records for isLike value is true");
             //Retrieve records whose isLike value is true
             foreach (var data in result)
             {
@@ -177,10 +178,25 @@ namespace ProductReviewManagement
             var average = dataTable.AsEnumerable()
                            .GroupBy(x => x.Field<int>("ProductID"))
                            .Select(x => new { ProductID = x.Key, Average = x.Average(p => p.Field<double>("Rating")) });
-            Console.WriteLine("Average Rating by ProductID");
+            Console.WriteLine("\nAverage Rating by ProductID");
+            Console.WriteLine("ProductId\tAverage");
             foreach (var data in average)
             {
-                Console.WriteLine(data.ProductID + "\t" + data.Average);
+                Console.WriteLine(data.ProductID + "\t\t" + data.Average);
+            }
+
+            //UC11
+            var review = dataTable.AsEnumerable().Where(x => x.Field<string>("Review")
+                           .Contains("Excellent", StringComparison.OrdinalIgnoreCase));
+            Console.WriteLine("\nExcellent Reviews");
+            Console.WriteLine("ProductId\tUserId\t\tRating\t\tReview\t\t\tIsLike");
+            foreach (var data in review)
+            {
+                foreach (var item in data.ItemArray)
+                {
+                    Console.Write(item + "\t\t");
+                }
+                Console.WriteLine();
             }
         }
     }
