@@ -12,8 +12,8 @@ namespace ProductReviewManagement
             List<ProductReview> productReviewList = new List<ProductReview>();
             //Add into list
             Management.AddProductReviews(productReviewList);
-            //Retrieve productId and Review
-            Management.SelectProductIdAndReview(productReviewList);
+            //Create data table
+            Management.CreateDataTable(productReviewList);
         }
     }
 }
