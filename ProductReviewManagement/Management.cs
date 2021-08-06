@@ -19,26 +19,26 @@ namespace ProductReviewManagement
             productReviews.Add(new ProductReview() { ProductID = 1, UserID = 1, Rating = 5, Review = "Excellent", IsLike = true });
             productReviews.Add(new ProductReview() { ProductID = 2, UserID = 4, Rating = 4, Review = "VeryGood", IsLike = true });
             productReviews.Add(new ProductReview() { ProductID = 2, UserID = 4, Rating = 5, Review = "Excellent", IsLike = true });
-            productReviews.Add(new ProductReview() { ProductID = 4, UserID = 4, Rating = 3, Review = "Good", IsLike = true });
+            productReviews.Add(new ProductReview() { ProductID = 4, UserID = 10, Rating = 3, Review = "Good", IsLike = true });
             productReviews.Add(new ProductReview() { ProductID = 5, UserID = 6, Rating = 2, Review = "Average", IsLike = false });
             productReviews.Add(new ProductReview() { ProductID = 9, UserID = 3, Rating = 4, Review = "VeryGood", IsLike = true });
-            productReviews.Add(new ProductReview() { ProductID = 12, UserID = 5, Rating = 5, Review = "Excellent", IsLike = true });
+            productReviews.Add(new ProductReview() { ProductID = 12, UserID = 10, Rating = 5, Review = "Excellent", IsLike = true });
             productReviews.Add(new ProductReview() { ProductID = 4, UserID = 4, Rating = 5, Review = "Excellent", IsLike = true });
             productReviews.Add(new ProductReview() { ProductID = 3, UserID = 6, Rating = 4, Review = "VeryGood", IsLike = true });
             productReviews.Add(new ProductReview() { ProductID = 5, UserID = 8, Rating = 1, Review = "Bad", IsLike = false });
             productReviews.Add(new ProductReview() { ProductID = 5, UserID = 10, Rating = 2, Review = "Average", IsLike = false });
             productReviews.Add(new ProductReview() { ProductID = 8, UserID = 15, Rating = 3, Review = "Good", IsLike = true });
             productReviews.Add(new ProductReview() { ProductID = 16, UserID = 17, Rating = 5, Review = "Excellent", IsLike = true });
-            productReviews.Add(new ProductReview() { ProductID = 5, UserID = 16, Rating = 4, Review = "VeryGood", IsLike = true });
-            productReviews.Add(new ProductReview() { ProductID = 7, UserID = 7, Rating = 5, Review = "Excellent", IsLike = true });
+            productReviews.Add(new ProductReview() { ProductID = 5, UserID = 10, Rating = 4, Review = "VeryGood", IsLike = true });
+            productReviews.Add(new ProductReview() { ProductID = 7, UserID = 10, Rating = 5, Review = "Excellent", IsLike = true });
             productReviews.Add(new ProductReview() { ProductID = 6, UserID = 4, Rating = 3, Review = "Good", IsLike = true });
             productReviews.Add(new ProductReview() { ProductID = 15, UserID = 5, Rating = 4, Review = "VeryGood", IsLike = true });
             productReviews.Add(new ProductReview() { ProductID = 15, UserID = 6, Rating = 2, Review = "Average", IsLike = false });
-            productReviews.Add(new ProductReview() { ProductID = 4, UserID = 17, Rating = 2, Review = "Average", IsLike = false });
+            productReviews.Add(new ProductReview() { ProductID = 4, UserID = 10, Rating = 2, Review = "Average", IsLike = false });
             productReviews.Add(new ProductReview() { ProductID = 3, UserID = 16, Rating = 3, Review = "Good", IsLike = true });
             productReviews.Add(new ProductReview() { ProductID = 5, UserID = 5, Rating = 5, Review = "Excellent", IsLike = true });
             productReviews.Add(new ProductReview() { ProductID = 3, UserID = 2, Rating = 4, Review = "VeryGood", IsLike = true });
-            productReviews.Add(new ProductReview() { ProductID = 6, UserID = 4, Rating = 4, Review = "VeryGood", IsLike = true });
+            productReviews.Add(new ProductReview() { ProductID = 6, UserID = 10, Rating = 4, Review = "VeryGood", IsLike = true });
             productReviews.Add(new ProductReview() { ProductID = 8, UserID = 5, Rating = 3, Review = "Good", IsLike = true });
             productReviews.Add(new ProductReview() { ProductID = 17, UserID = 19, Rating = 4, Review = "VeryGood", IsLike = true });
             return productReviews.Count;
@@ -139,6 +139,7 @@ namespace ProductReviewManagement
         /// UC 9 - Retrieve all records whose isLike value is true
         /// UC 10 - Average Rating of each ProductId
         /// UC 11 - Nice Reviews
+        /// UC 12 - Retrieve using UserId orderby Rating
         /// </summary>
         /// <param name="productReviews"></param>
         public static void CreateDataTable(List<ProductReview> productReviews)
@@ -191,6 +192,20 @@ namespace ProductReviewManagement
             Console.WriteLine("\nExcellent Reviews");
             Console.WriteLine("ProductId\tUserId\t\tRating\t\tReview\t\t\tIsLike");
             foreach (var data in review)
+            {
+                foreach (var item in data.ItemArray)
+                {
+                    Console.Write(item + "\t\t");
+                }
+                Console.WriteLine();
+            }
+
+            //UC12
+            var rating = dataTable.AsEnumerable().Where(x => x.Field<int>("UserID") == 10)
+                           .OrderBy(x => x.Field<double>("Rating"));
+            Console.WriteLine("\nRetrieve records using UserId order by Rating");
+            Console.WriteLine("ProductId\tUserId\t\tRating\t\tReview\t\t\tIsLike");
+            foreach (var data in rating)
             {
                 foreach (var item in data.ItemArray)
                 {
